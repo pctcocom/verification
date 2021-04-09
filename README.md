@@ -48,69 +48,48 @@ API
 
 You can use theses functions :
 
-* **__construct($phrase = null)**, constructs the builder with the given phrase, if the phrase is null, a random one will be generated
-* **getPhrase()**, allow you to get the phrase contents
-* **setDistortion($distortion)**, enable or disable the distortion, call it before `build()`
-* **isOCRReadable()**, returns `true` if the OCR can be read using the `ocrad` software, you'll need to have shell_exec enabled, imagemagick and ocrad installed
-* **buildAgainstOCR($width = 150, $height = 40, $font = null)**, builds a code until it is not readable by `ocrad`
-* **build($width = 150, $height = 40, $font = null)**, builds a code with the given $width, $height and $font. By default, a random font will be used from the library
-* **save($filename, $quality = 80)**, saves the captcha into a jpeg in the $filename, with the given quality
-* **get($quality = 80)**, returns the jpeg data
-* **output($quality = 80)**, directly outputs the jpeg code to a browser
-* **setBackgroundColor($r, $g, $b)**, sets the background color to force it (this will disable many effects and is not recommended)
-* **setBackgroundImages(array($imagepath1, $imagePath2))**, Sets custom background images to be used as captcha background. It is recommended to disable image effects when passing custom images for background (ignore_all_effects). A random image is selected from the list passed, the full paths to the image files must be passed.
-* **setInterpolation($interpolate)**, enable or disable the interpolation (enabled by default), disabling it will be quicker but the images will look uglier
-* **setIgnoreAllEffects($ignoreAllEffects)**, disable all effects on the captcha image. Recommended to use when passing custom background images for the captcha.
-* **testPhrase($phrase)**, returns true if the given phrase is good
-* **setMaxBehindLines($lines)**, sets the maximum number of lines behind the code
-* **setMaxFrontLines($lines)**, sets the maximum number of lines on the front of the code
+* **__construct($phrase = null)**, 使用给定的短语构造构建器，如果该短语为null，则将生成一个随机的短语
+* **getPhrase()**, 允许您获取短语内容
+* **setDistortion($distortion)**, 启用或禁用失真，请在调用之前 `build()`
+* **isOCRReadable()**, 如果可以使用`true`软件读取OCR，则返回`ocrad`，则需要启用shell_exec，安装imagemagick和ocrad
+* **buildAgainstOCR($width = 150, $height = 40, $font = null)**, 生成一个代码，直到它不被可读为止 `ocrad`
+* **build($width = 150, $height = 40, $font = null)**, 使用给定的 $width，$height和$font构建代码。 默认情况下，库中将使用随机字体
+* **save($filename, $quality = 80)**, 将jpeg验证码以给定的质量保存到$filename中
+* **get($quality = 80)**, 返回jpeg数据
+* **output($quality = 80)**, 直接将jpeg代码输出到浏览器
+* **setBackgroundColor($r, $g, $b)**, 设置强制使用的背景颜色（这将禁用许多效果，不建议使用）
+* **setBackgroundImages(array($imagepath1, $imagePath2))**, 设置用作验证码背景的自定义背景图像。 当传递自定义图像作为背景时，建议禁用图像效果（ignore_all_effects）。 从传递的列表中选择一个随机图像，必须传递图像文件的完整路径。
+* **setInterpolation($interpolate)**, 启用或禁用插值（默认情况下启用），禁用插值会更快，但是图像看起来更难看
+* **setIgnoreAllEffects($ignoreAllEffects)**, 禁用对验证码图像的所有效果。 建议在为验证码传递自定义背景图像时使用。
+* **testPhrase($phrase)**, 如果给定的短语是好的，则返回true
+* **setMaxBehindLines($lines)**, 设置代码后面的最大行数
+* **setMaxFrontLines($lines)**, 设置代码前面的最大行数
 
-If you want to change the number of character, you can call the phrase builder directly using
-extra parameters:
+如果要更改字符数，可以直接使用以下命令调用词组生成器
+额外参数：
 
 ```php
-use Gregwar\Captcha\CaptchaBuilder;
-use Gregwar\Captcha\PhraseBuilder;
+use Pctco\Verification\Captcha\Captcha;
+use Pctco\Verification\Captcha\Phrase;
 
-// Will build phrases of 3 characters
-$phraseBuilder = new PhraseBuilder(4)
+// 将建立3个字元的词组
+$phraseBuilder = new Phrase(4)
 
-// Will build phrases of 5 characters, only digits
-$phraseBuilder = new PhraseBuilder(5, '0123456789');
+// 将建立由5个字符组成的词组，仅包含数字
+$phraseBuilder = new Phrase(5, '0123456789');
 
-// Pass it as first argument of CaptchaBuilder, passing it the phrase
-// builder
-$captcha = new CaptchaBuilder(null, $phraseBuilder);
+// 将其作为Captcha的第一个参数传递，将其传递给短语
+// 建造者
+$captcha = new Captcha(null, $phraseBuilder);
 ```
 
 You can also pass directly the wanted phrase to the builder:
 
 ```php
-// Building a Captcha with the "hello" phrase
-$captcha = new CaptchaBuilder('hello');
+// 使用“ hello”短语构建验证码
+$captcha = new Captcha('hello');
 ```
 
-Complete example
-================
 
-If you want to see an example you can have a look at he ``demo/form.php``, which uses ``demo/session.php`` to
-render a captcha and check it after the submission
-
-Symfony Bundle
-================
-
-You can have a look at the following repository to enjoy the Symfony 2 bundle packaging this captcha generator :
-https://github.com/Gregwar/CaptchaBundle
-
-Yii2 Extension
-===============
-
-You can use the following extension for integrating with Yii2 Framework :
-https://github.com/juliardi/yii2-captcha
-
-License
-=======
-
-This library is under MIT license, have a look to the `LICENSE` file
 
 ## v1.0.0
