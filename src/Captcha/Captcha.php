@@ -52,7 +52,7 @@ class Captcha implements CaptchaInterface{
    protected $phrase = null;
 
    /**
-   * @var PhraseBuilderInterface
+   * @var PhraseInterface
    */
    protected $builder;
 
@@ -129,9 +129,9 @@ class Captcha implements CaptchaInterface{
    */
    public $tempDir = 'temp/';
 
-   public function __construct($phrase = null, PhraseBuilderInterface $builder = null){
+   public function __construct($phrase = null, PhraseInterface $builder = null){
       if ($builder === null) {
-         $this->builder = new PhraseBuilder;
+         $this->builder = new Phrase;
       } else {
          $this->builder = $builder;
       }
