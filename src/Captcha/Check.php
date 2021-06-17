@@ -1,28 +1,24 @@
 <?php
 namespace Pctco\Verification\Captcha;
+use Pctco\Verification\Captcha\Captcha;
+use Pctco\Verification\Captcha\Phrase;
 use think\facade\Config;
-use think\facade\Session;
 class Check{
-   /**
-    * @var Config|null
-    */
-   private $config = null;
 
-   /**
-    * @var Session|null
-    */
-   private $session = null;
+   // 想要验证的code
+   private $verify;
+   //
+   private $captcha;
 
 
    /**
    * @name __construct
    * @describe 架构方法 设置参数
-   * @param Config  $config
-   * @param Session $session
+   * @param string  $code
    **/
-   public function __construct(Config $config, Session $session){
-      $this->config  = $config;
-      $this->session = $session;
+   public function __construct($code){
+      $this->verify  = $code;
+      $this->captcha = new \Pctco\Verification\Captcha\Captcha;
    }
    /**
    * @name verify
@@ -31,8 +27,12 @@ class Check{
    * @param string $code 用户验证码
    * @return bool 用户验证码是否正确
    **/
+   public function captcha_img(){
+      $this->captcha->build();
+      return $this->captcha->inline();
+   }
    public function verify(string $code): bool{
-      return $code;
+      return $this->captcha->getPhrase();
       // if (!$this->session->has('captcha')) {
       //    return false;
       // }

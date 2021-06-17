@@ -17,15 +17,15 @@
     ],
     "support": {
         "email": "pctco.com@gmail.com",
-        "issues": "https://github.com/pctcocom/coding/issues",
+        "issues": "https://github.com/pctcocom/verification/issues",
         "forum": "https://pctco.com",
-        "source": "https://github.com/pctcocom/coding"
+        "source": "https://github.com/pctcocom/verification"
     },
     "require": {
         "php": ">=7.1"
     },
     "suggest": {
-        "ext-event": "For better coding configuration. "
+        "ext-event": "For better verification configuration. "
     },
     "autoload": {
         "psr-4": {
