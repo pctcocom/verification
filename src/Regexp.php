@@ -12,56 +12,6 @@ class Regexp{
    **/
    public function preg($key){
       $preg = [
-         /*
-         * 查找全部url
-         /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
-
-         *
-         ~https?:\/\/(?:www\.)?rutube\.ru\/video\/([a-f0-9]{32})~ix
-
-         * vimeo.com
-         '~(?:<iframe [^>]*src=")?(?:https?:\/\/(?:[\w]+\.)*vimeo\.com(?:[\/\w]*\/videos?)?\/([0-9]+)[^\s]*)"?(?:[^>]*></iframe>)?(?:<p>.*</p>)?~ix'
-
-         '~                          # Match Vimeo link and embed code
-   		(?:<iframe [^>]*src=")?         # If iframe match up to first quote of src
-   		(?:                             # Group vimeo url
-   				https?:\/\/             # Either http or https
-   				(?:[\w]+\.)*            # Optional subdomains
-   				vimeo\.com              # Match vimeo.com
-   				(?:[\/\w]*\/videos?)?   # Optional video sub directory this handles groups links also
-   				\/                      # Slash before Id
-   				([0-9]+)                # $1: VIDEO_ID is numeric
-   				[^\s]*                  # Not a space
-   		)                               # End group
-   		"?                              # Match end quote if part of src
-   		(?:[^>]*></iframe>)?            # Match the end of the iframe
-   		(?:<p>.*</p>)?                  # Match any title information stuff
-   		~ix'
-
-         * youtube
-         '~               # Match non-linked youtube URL in the wild. (Rev:20130823)
-        https?://         # Required scheme. Either http or https.
-        (?:[0-9A-Z-]+\.)? # Optional subdomain.
-        (?:               # Group host alternatives.
-          youtu\.be/      # Either youtu.be,
-        | youtube         # or youtube.com or
-          (?:-nocookie)?  # youtube-nocookie.com
-          \.com           # followed by
-          \S*             # Allow anything up to VIDEO_ID,
-          [^\w\s-]       # but char before ID is non-ID char.
-        )                 # End host alternatives.
-        ([\w-]{11})      # $1: VIDEO_ID is exactly 11 chars.
-        (?=[^\w-]|$)     # Assert next char is non-ID or EOS.
-        (?!               # Assert URL is not pre-linked.
-          [?=&+%\w.-]*    # Allow URL (query) remainder.
-          (?:             # Group pre-linked alternatives.
-            [\'"][^<>]*>  # Either inside a start tag,
-          | </a>          # or inside <a> element text contents.
-          )               # End recognized pre-linked alts.
-        )                 # End negative lookahead assertion.
-        [?=&+%\w.-]*        # Consume any URL (query) remainder.
-        ~ix'
-         */
          // img src
          'html.img.src.link'   =>   '/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"].*?[\/]?>/',
          'html.img.src.base64'   =>   '/<[img|IMG].*?src=[\'|\"](data:image.*?;base64.*?(?:[\="]))[\'|\"].*?[\/]?>/',
@@ -91,7 +41,7 @@ class Regexp{
          'format.img'   =>   '/.*?(\.png|\.jpg|\.jpeg|\.gif).*?/',
          // 是否是链接图片格式 new \Pctco\Storage\App\UploadImage\SaveLinkImage 关联了此规则
          'format.link.img'   =>   '/^(http)(s)?(\:\/\/).*?(\.png|\.jpg|\.jpeg|\.gif|\.ico).*?/',
-
+         // 是否是音频格式
          'format.link.video'   =>   '/^(http)(s)?(\:\/\/).*?(\.mp4|\.wmv|\.webm|\.avi).*?/'
       ];
       return empty($preg[$key])?$key:$preg[$key];
