@@ -119,18 +119,21 @@ class Regexp{
       $original = [];
       $new = [];
       $TopDomain = Config::get('initialize.client.domain.top');
-      foreach ($FindLink as $url) {
-         $this->data = $url;
-         $key = Config::get('initialize.code.key');
+      if (!empty($FindLink)) {
+         foreach ($FindLink as $url) {
+            $this->data = $url;
+            $key = Config::get('initialize.code.key');
 
-         // 判断是否是外链 并且 是 http(s) 开头
-         if (strpos($url,$TopDomain) === false && $this->check('html.href.link')) {
-            $original[] = 'href="'.$url.'"';
-            $new[] = 'href="'.'//www.'.$TopDomain.'/link/'.JWT::encode($url,$key).'" target="_blank"';
+            // 判断是否是外链 并且 是 http(s) 开头
+            if (strpos($url,$TopDomain) === false && $this->check('html.href.link')) {
+               $original[] = 'href="'.$url.'"';
+               $new[] = 'href="'.'//www.'.$TopDomain.'/link/'.JWT::encode($url,$key).'" target="_blank"';
+            }
          }
-      }
 
-      return str_replace($original,$new,$content);
+         return str_replace($original,$new,$content);
+      }
+      return $content;
    }
    /**
    * @name phone
