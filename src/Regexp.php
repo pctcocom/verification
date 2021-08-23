@@ -1,5 +1,7 @@
 <?php
 namespace Pctco\Verification;
+use Pctco\Coding\Token\JWT;
+use think\facade\Config;
 class Regexp{
    function __construct($str = ''){
       $this->data = $str;
@@ -28,13 +30,16 @@ class Regexp{
          // a href
          'html.a.href.link'   =>   '/<[a|A].*?href="(.*?)".*?>/is',
 
-         //link href
+         //link img href
          'html.img.href.link'   =>   '/<[link|LINK].*?href=[\'|\"](.*?(?:[\.ico|\.gif|\.jpg|\.png|\.jpeg]))[\'|\"|\?].*?[\/]?>/',
 
+         // 是否是链接
+         'html.href.link'   =>   '/^http(s)?:\\/\\/.+/',
 
          'html.script.string.img.link'   =>   '/[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"]/',
          // bug: 无法匹配到url(https://test.jpg) 无引号到链接
          'html.css.string.img.link'   =>   '/url\([\"|\'](.*?[\.gif|\.jpg|\.png|\.jpeg].*?)[\"|\']\)/',
+
 
 
          // 是否是图片格式
@@ -101,6 +106,31 @@ class Regexp{
          $type = 'AutoProtocolUrl';
       }
       return $type;
+   }
+   /**
+   * @name Replace external links
+   * @describe  替换外链
+   * @return String HTML
+   **/
+   public function ReplaceExternalLinks(){
+      $content = $this->data;
+      $FindLink = $this->find('html.a.href.link');
+
+      $original = [];
+      $new = [];
+      $TopDomain = Config::get('initialize.client.domain.top');
+      foreach ($FindLink as $url) {
+         $this->data = $url;
+         $key = Config::get('initialize.code.key');
+
+         // 判断是否是外链 并且 是 http(s) 开头
+         if (strpos($url,$TopDomain) === false && $this->check('html.href.link')) {
+            $original[] = 'href="'.$url.'"';
+            $new[] = 'href="'.'//www.'.$TopDomain.'/link/'.JWT::encode($url,$key).'" target="_blank"';
+         }
+      }
+
+      return str_replace($original,$new,$content);
    }
    /**
    * @name phone
