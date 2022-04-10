@@ -14,6 +14,10 @@ class Regexp{
    **/
    public function preg($key){
       $preg = [
+
+
+         'email'  => '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/',
+
          /** 
           ** 获取链接
           *? @date 21/11/25 16:07
@@ -149,8 +153,11 @@ class Regexp{
    * @describe  替换外链
    * @return String HTML
    **/
-   public function ReplaceExternalLinks(){
-      $content = $this->data;
+   public function ReplaceExternalLinks($content = ''){
+      if ($content === '') {
+         $content = $this->data;
+      }
+      
       $FindLink = $this->find('html.a.href.link');
 
       $original = [];
@@ -159,7 +166,7 @@ class Regexp{
       if (!empty($FindLink)) {
          foreach ($FindLink as $url) {
             $this->data = $url;
-            $key = Config::get('initialize.code.key');
+            $key = Config::get('initialize.safety.key.private');
 
             // 判断是否是外链 并且 是 http(s) 开头
             if (strpos($url,$TopDomain) === false && $this->check('html.href.link')) {
