@@ -112,6 +112,33 @@ class Regexp{
       $arr = empty($arr[1]) ? [] : array_unique($arr[1]);
       return empty($arr)?false:$arr;
    }
+   /** 
+    ** 获取主域名
+    *? @date 22/04/26 16:05
+    *  @param $url URL
+    *! @return Array
+    */
+   public function domain(){
+      $parse = parse_url($this->data);
+
+      $host = '';
+      $secondary = '';
+
+      if (!empty($parse['host'])) {
+         $array = explode('.',$parse['host']);
+         if (count($array) === 3) {
+            $host = $array[1].'.'.$array[2];
+            $secondary = $parse['host'];
+         }else{
+            $host = $parse['host'];
+         }
+      }
+
+      return [
+         'host'   => $host,
+         'secondary' => $secondary
+      ];
+   }
    /**
    * @name Remove Url Param
    * @describe 移除url参数 ?182&age=18
