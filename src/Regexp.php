@@ -2,6 +2,7 @@
 namespace Pctco\Verification;
 use Pctco\Coding\Token\JWT;
 use think\facade\Config;
+use think\facade\Cache;
 class Regexp{
    function __construct($str = ''){
       $this->data = $str;
@@ -186,14 +187,14 @@ class Regexp{
       }
       
       $FindLink = $this->find('html.a.href.link');
-
+      $initialize = Cache::store('config')->get(md5('app-middleware-configuration'));
       $original = [];
       $new = [];
-      $TopDomain = Config::get('initialize.client.domain.top');
+      $TopDomain = $initialize['initialize']['client']['domain']['top'];
       if (!empty($FindLink)) {
          foreach ($FindLink as $url) {
             $this->data = $url;
-            $key = Config::get('initialize.safety.key.private');
+            $key = $initialize['initialize']['safety']['key']['private'];
 
             // 判断是否是外链 并且 是 http(s) 开头
             if (strpos($url,$TopDomain) === false && $this->check('html.href.link')) {
