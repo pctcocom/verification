@@ -51,7 +51,7 @@ class Regexp{
          // 是否是图片格式
          'format.img'   =>   '/.*?(\.png|\.jpg|\.jpeg|\.gif).*?/',
          // 是否是base64 图片格式
-         'format.img.base64'   =>   '/^(data:\s*image\/(\w+);base64,)/',
+         'format.img.base64'   =>   '/^(data:\s*image\/(svg\+xml|fax|gif|x\-icon|jpeg|pnetvue|png|tiff|webp);base64,)/',
          // 是否是链接图片格式 new \Pctco\Storage\App\UploadImage\SaveLinkImage 关联了此规则
          'format.link.img'   =>   '/^(http)(s)?(\:\/\/).*?(\.png|\.jpg|\.jpeg|\.gif|\.ico).*?/',
          // 是否是音频格式
