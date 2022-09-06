@@ -23,7 +23,7 @@ class Regexp{
           ** 获取链接
           *? @date 21/11/25 16:07
          */
-         'html.img.src.link'   =>   '/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"].*?[\/]?>/',
+         'html.img.src.link'   =>   '/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg|\.webp]))[\'|\"].*?[\/]?>/',
          'html.img.src.base64'   =>   '/<[img|IMG].*?src=[\'|\"](data:image.*?;base64.*?(?:[\="]))[\'|\"].*?[\/]?>/',
          'markdown.img.link'   =>   '/!\[.*?\]\((.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))\)/',
          'html.video.src.link'   =>   '/<[video|VIDEO].*?src=[\'|\"](.*?(?:[\.mp4]))[\'|\"|\?].*?[\/]?/',
@@ -31,7 +31,7 @@ class Regexp{
          'html.script.content'   =>   '/<script.*?>(.*?)<\/script>/is',
          'html.css.href.link'   =>   '/<[link|LINK].*?href=[\'|\"](.*?(?:[\.css]))[\'|\"|\?].*?[\/]?>/',
          'html.a.href.link'   =>   '/<[a|A].*?href="(.*?)".*?>/is',
-         'html.img.href.link'   =>   '/<[link|LINK].*?href=[\'|\"](.*?(?:[\.ico|\.gif|\.jpg|\.png|\.jpeg]))[\'|\"|\?].*?[\/]?>/',
+         'html.img.href.link'   =>   '/<[link|LINK].*?href=[\'|\"](.*?(?:[\.ico|\.gif|\.jpg|\.png|\.jpeg|\.webp]))[\'|\"|\?].*?[\/]?>/',
 
          /** 
           ** 判断格式
@@ -39,9 +39,9 @@ class Regexp{
          */
          'html.href.link'   =>   '/^http(s)?:\\/\\/.+/',
 
-         'html.script.string.img.link'   =>   '/[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg]))[\'|\"]/',
+         'html.script.string.img.link'   =>   '/[\'|\"](.*?(?:[\.gif|\.jpg|\.png|\.jpeg|\.webp]))[\'|\"]/',
          // bug: 无法匹配到url(https://test.jpg) 无引号到链接
-         'html.css.string.img.link'   =>   '/url\([\"|\'](.*?[\.gif|\.jpg|\.png|\.jpeg].*?)[\"|\']\)/',
+         'html.css.string.img.link'   =>   '/url\([\"|\'](.*?[\.gif|\.jpg|\.png|\.jpeg|\.webp].*?)[\"|\']\)/',
 
          /** 
           ** 格式判断
@@ -49,11 +49,11 @@ class Regexp{
          */
 
          // 是否是图片格式
-         'format.img'   =>   '/.*?(\.png|\.jpg|\.jpeg|\.gif).*?/',
+         'format.img'   =>   '/.*?(\.png|\.jpg|\.jpeg|\.gif|\.webp|\.ico).*?/',
          // 是否是base64 图片格式
          'format.img.base64'   =>   '/^(data:\s*image\/(svg\+xml|fax|gif|x\-icon|jpeg|pnetvue|png|tiff|webp);base64,)/',
          // 是否是链接图片格式 new \Pctco\Storage\App\UploadImage\SaveLinkImage 关联了此规则
-         'format.link.img'   =>   '/^(http)(s)?(\:\/\/).*?(\.png|\.jpg|\.jpeg|\.gif|\.ico).*?/',
+         'format.link.img'   =>   '/^(http)(s)?(\:\/\/).*?(\.png|\.jpg|\.jpeg|\.gif|\.webp|\.ico).*?/',
          // 是否是音频格式
          'format.link.video'   =>   '/^(http)(s)?(\:\/\/).*?(\.mp4|\.wmv|\.webm|\.avi).*?/'
 
